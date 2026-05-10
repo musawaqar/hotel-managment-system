@@ -1,0 +1,40 @@
+.services {
+  padding: 60px 20px;
+  text-align: center;
+  background: white;
+  margin: 0;
+}
+.services h2 {
+  margin-bottom: 30px;
+  color: #0D1B2A;
+}
+.heading{
+    text-align: left;
+}
+.services-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.service-card {
+  background: white;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-card h3 {
+  color: #C9A227;
+}
+.services h1 {
+  margin-top: 0;
+  padding: 10px 0;
+}
