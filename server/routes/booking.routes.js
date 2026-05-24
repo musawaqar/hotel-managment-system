@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const Booking = require("../Models/booking.js")
 const bookingSchema = require("../Validations/BookingValidations.js")
-const { validate, validateParam } = require("../middleware/validate");
+const { validate, validateParam } = require("../middleware/validate.js");
 const idSchema = require("../Validations/ParamValidations.js");
 // reminder
 
