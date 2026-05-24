@@ -1,8 +1,8 @@
-import User from "../Models/User";
+import User from "../models/User";
+import { hashPassword } from "../utils/hashPassword";
 
 
-
-class AuthController {
+class AuthService {
     constructor() {
 
     }
@@ -10,13 +10,15 @@ class AuthController {
     static async Signup (userName , email , password , role) {
         try {
             const existingUser = await User.findOne({ $or:[{email}]})
-                    if (existingUser) {
-                        return {success:false, already:true, message:"User Already Exists"};
-                    }
+            if (existingUser) {
+                return {success:false, already:true, message:"User Already Exists"};
+            }
+            const hashedPassword = await hashPassword(password);
+
             const newUser = new User({
                 userName,
                 email,
-                password,
+                password:hashedPassword,
                 role
             });
             await newUser.save()
@@ -28,13 +30,16 @@ class AuthController {
         }
     }
 
-    static async Login (userName , email , password , role) {
+    static async Login (userName , password) {
         try {
-            const user = await User.findOne({email})
+            const user = await User.findOne({username: userName})
             if(!user) {
                 return {success:false, user:false, message:"User not found!"}
             }
-            const isMatch = await bcrypt.compare(password, user.password);``
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return {success:false, message:"Signup Successful!"};
+            }
         } catch (error) {
             console.error("Error While Signup, ", error);
             return {success:false, message:"User Already Exists"};
@@ -45,4 +50,4 @@ class AuthController {
 
 
 
-export default AuthController;
+export default AuthService;

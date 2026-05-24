@@ -1,48 +1,47 @@
-import User from "../Models/User";
+import AuthService from "../services/auth.service.js";
+import { generateToken } from "../utils/generateToken.js";
 
+const User = require("../Models/User.js")
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt");
+const { default: AuthController } = require("../controllers/auth.controller.js");
 
-
-class AuthController {
-    constructor() {
-
-    }
-
-    static async Signup (userName , email , password , role) {
-        try {
-            const existingUser = await User.findOne({ $or:[{email}]})
-                    if (existingUser) {
-                        return {success:false, already:true, message:"User Already Exists"};
-                    }
-            const newUser = new User({
-                userName,
-                email,
-                password,
-                role
-            });
-            await newUser.save()
-            return {success:true, already:false, message:"Signup Successful!"};
-
-        } catch (error) {
-            console.error("Error While Signup, ", error);
-            return {success:false, message:"User Already Exists"};
-        }
-    }
-
-    static async Login (userName , email , password , role) {
-        try {
-            const user = await User.findOne({email})
-            if(!user) {
-                return {success:false, user:false, message:"User not found!"}
+export const signupController = async(req,res) => {
+    try {
+        const {userName , email , password , role} = req.body;
+        const result = await AuthService.Signup(userName , email , password , role);
+        if (!result.success) {
+            if (result?.already) {
+                res.status(409).json(result);
+            } else {
+                res.status(400).json(result);
             }
-            const isMatch = await bcrypt.compare(password, user.password);``
-        } catch (error) {
-            console.error("Error While Signup, ", error);
-            return {success:false, message:"User Already Exists"};
         }
+        res.status(201).json(result);
+    } catch (err) {
+        console.error("Error at Signup Endpoint, ", err);
+        res.status(500).json({ success:false, message: "Server error" });
     }
+};
 
+
+export const loginController = async(req,res)=>{
+    try {
+        const {email,password} = req.body
+        const user = await User.findOne({email})
+        if(!user)
+        {
+            return res.status(400).json({message:"User not Found!"})
+        }
+        const isMatch = await bcrypt.compare(password, user.password);``
+        if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    const token = await generateToken()
+    res.json({ message: "Login successful", userId: user._id });
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
 }
 
-
-
-export default AuthController;
+module.exports = router;

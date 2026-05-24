@@ -1,22 +1,13 @@
-// YE SAB sab se pehla wala home page pe add krna usko signle scroll page bnana hai 
-// Navbar
-// Hero section (first impression)
-// About hotel
-// Rooms preview
-// Services
-// Gallery
-// Footer
-import About from "./myComp/About";
-import Booking from "./myComp/Booking";
-import Contact from "./myComp/Contact";
-import Footer from "./myComp/Footer";
-import Hero from "./myComp/Hero";
-import Login from "./myComp/Login";
-import Navbar from "./myComp/Navbar";
-import Room from "./myComp/Room";
-import Services from "./myComp/Services";
-import Signup from "./myComp/Signup";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Contact from "./components/Contact/Contact";
+import Navbar from "./components/Navbar/Navbar";
+import Services from "./components/Services/Services";
+import About from "./components/About/About";
+import Booking from "./components/Booking/Booking";
+import Hero from "./components/Hero/Hero";
+import Room from "./components/Room/Room";
+import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <BrowserRouter>
@@ -24,7 +15,7 @@ function App() {
         <Route path="/" 
         element={
           <>
-        <Navbar />
+        <Navbar/>
         <Hero/>
         <Room/>
         <Services/>
@@ -34,7 +25,7 @@ function App() {
         <Route path="/Services" element={
           <>
           <Navbar/>
-          <Services />
+          <Services/>
           </>
           } />
           <Route path="/Contact" element={

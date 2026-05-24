@@ -1,7 +1,26 @@
-import React from 'react'
-import "./Login.css"
-import hotelImg  from "../assets/hotel.jpg"
+import {useState, useEffect} from 'react';
+import "./Login.css";
+import hotelImg  from "../assets/hotel.jpg";
+import axios from "axios";
+
+
+
 export default function Signup() {
+  const [signupData, setSignupData] = useState({
+    useName:"",
+    email:"",
+    password:"",
+    role:"customer"
+  });
+
+
+  const handleSignup = async() => {
+    try {
+      const response = await axios
+    } catch (error) {
+
+    }
+  }
   return (
     <div className='container'>
           <div className="login-box">
