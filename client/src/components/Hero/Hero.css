@@ -1,0 +1,51 @@
+.hero {
+  height: 100vh;
+  background: url("/public/hotel2.jpg") center/cover no-repeat;
+  position: relative;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+/* Dark overlay for readability */
+.overlay {
+  height: 100%;
+  width: 100%;
+  background: rgba(13, 27, 42, 0.75); /* navy overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: center;
+  color: white; /* cream */
+  max-width: 700px;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 18px;
+  color: #ddd;
+  margin-bottom: 25px;
+}
+
+.hero-btn {
+  padding: 12px 28px;
+  border: none;
+  background: #C9A227; /* premium gold */
+  color: #0D1B2A;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hero-btn:hover {
+  background: #D4AF37;
+}
