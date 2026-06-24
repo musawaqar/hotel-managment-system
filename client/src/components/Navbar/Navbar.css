@@ -1,45 +1,258 @@
-body{
-    background-color: white;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ── Tokens ───────────────────────────────── */
+:root {
+  --obsidian:    #0A0A0F;
+  --ivory:       #F5F0E8;
+  --champagne:   #C9A96E;
+  --navy:        #1A1A2E;
+  --slate:       #6B6B7B;
+  --border:      rgba(255,255,255,0.08);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ── Base reset ──────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--obsidian);
+  color: var(--ivory);
+}
+
+/* ── Navbar shell ────────────────────────── */
 .navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  padding: 0 48px;
+  height: 80px;
+  transition: background 0.5s var(--ease-smooth),
+              backdrop-filter 0.5s var(--ease-smooth),
+              border-bottom 0.5s var(--ease-smooth);
+}
+
+.navbar--scrolled {
+  background: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: #0D1B2A;
-  padding: 15px 40px;
-  color: #D4AF37;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
+/* ── Logo ────────────────────────────────── */
+.navbar__logo {
+  text-decoration: none;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  flex-shrink: 0;
 }
 
-.nav-links {
+.navbar__logo-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--champagne);
+  line-height: 1;
+}
+
+.navbar__logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--ivory);
+  letter-spacing: 0.02em;
+}
+
+.navbar__logo-text em {
+  font-style: italic;
+  color: var(--champagne);
+}
+
+/* ── Desktop nav links ───────────────────── */
+.navbar__links {
+  display: flex;
+  list-style: none;
+  gap: 36px;
+  flex: 1;
+  justify-content: center;
+}
+
+.navbar__link {
+  text-decoration: none;
+  color: rgba(245, 240, 232, 0.72);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s var(--ease-smooth);
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--ivory);
+}
+
+.navbar__link-bar {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 1px;
+  width: 0;
+  background: var(--champagne);
+  transition: width 0.35s var(--ease-smooth);
+}
+
+.navbar__link:hover .navbar__link-bar,
+.navbar__link--active .navbar__link-bar {
+  width: 100%;
+}
+
+/* ── Actions ─────────────────────────────── */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.navbar__login {
+  text-decoration: none;
+  color: rgba(245, 240, 232, 0.65);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  transition: color 0.3s;
+}
+
+.navbar__login:hover { color: var(--ivory); }
+
+.navbar__reserve {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--champagne);
+  color: var(--obsidian);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border-radius: 2px;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.navbar__reserve:hover {
+  background: #d4b07c;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201, 169, 110, 0.35);
+}
+
+/* ── Hamburger ───────────────────────────── */
+.navbar__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.navbar__burger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--ivory);
+  transition: transform 0.35s var(--ease-smooth), opacity 0.35s;
+}
+
+.navbar__burger--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.navbar__burger--open span:nth-child(2) { opacity: 0; }
+.navbar__burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── Mobile drawer ───────────────────────── */
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 850;
+  background: var(--obsidian);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+  transform: translateX(100%);
+  transition: transform 0.5s var(--ease-smooth);
+}
+
+.mobile-drawer--open { transform: translateX(0); }
+
+.mobile-drawer__links {
   list-style: none;
   display: flex;
-  gap: 25px;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
 }
 
-.nav-links a {
+.mobile-drawer__links li {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s var(--ease-smooth) calc(var(--i) * 0.07s),
+              transform 0.4s var(--ease-smooth) calc(var(--i) * 0.07s);
+}
+
+.mobile-drawer--open .mobile-drawer__links li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-drawer__links a {
   text-decoration: none;
-  color: #C9A227;
-  transition: 0.3s;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ivory);
+  transition: color 0.3s;
 }
 
-.nav-links a:hover {
-  color: #38bdf8;
+.mobile-drawer__links a:hover { color: var(--champagne); }
+
+.mobile-drawer__cta {
+  text-decoration: none;
+  border: 1px solid var(--champagne);
+  color: var(--champagne);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 40px;
+  border-radius: 2px;
+  transition: background 0.3s, color 0.3s;
 }
 
-.login-btn {
-  padding: 8px 18px;
-  border: none;
-  background: #38bdf8;
-  color: black;
-  border-radius: 6px;
-  cursor: pointer;
+.mobile-drawer__cta:hover {
+  background: var(--champagne);
+  color: var(--obsidian);
 }
 
-.login-btn:hover {
-  background: #0ea5e9;
+/* ── Responsive ──────────────────────────── */
+@media (max-width: 960px) {
+  .navbar__links,
+  .navbar__actions { display: none; }
+  .navbar__burger { display: flex; }
+  .navbar { padding: 0 24px; }
 }

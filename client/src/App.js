@@ -8,6 +8,9 @@ import Booking from "./components/Booking/Booking";
 import Hero from "./components/Hero/Hero";
 import Room from "./components/Room/Room";
 import Footer from "./components/Footer/Footer";
+import Login from "./components/Auth/Login/Login";
+import Signup from "./components/Auth/Signup/Signup";
+
 function App() {
   return (
     <BrowserRouter>
@@ -22,31 +25,37 @@ function App() {
         <Footer/>
         </>
         } />
-        <Route path="/Auth/Login" element={
+        <Route path="/auth/login" element={
           <>
           <Navbar/>
           <Login/>
           </>
           } />
-        <Route path="/Services" element={
+          <Route path="/auth/signup" element={
+          <>
+          <Navbar/>
+          <Signup/>
+          </>
+          } />
+        <Route path="/services" element={
           <>
           <Navbar/>
           <Services/>
           </>
           } />
-          <Route path="/Contact" element={
+          <Route path="/contact" element={
           <>
           <Navbar/>
           <Contact/>
           </>
           } />
-          <Route path="/About" element={
+          <Route path="/about" element={
           <>
           <Navbar/>
           <About/>
           </>
           } />
-          <Route path="/Booking" element={
+          <Route path="/booking" element={
           <>
           <Navbar/>
           <Booking/>

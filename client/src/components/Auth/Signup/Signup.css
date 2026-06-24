@@ -8,24 +8,24 @@
 }
 
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
-.login{
+.signup{
     min-height:100vh;
-    background: var(--obsidian);
-    position:relative;
+    background:var(--obsidian);
     display:flex;
     justify-content:center;
     align-items:center;
+    position:relative;
     overflow:hidden;
 }
 
 /* Overlay */
 
-.login__overlay{
+.signup__overlay{
     position:absolute;
     inset:0;
     background:
@@ -36,22 +36,22 @@
 
 /* Orbs */
 
-.login__orb{
+.signup__orb{
     position:absolute;
     border-radius:50%;
     filter:blur(90px);
     opacity:.15;
 }
 
-.login__orb--1{
-    width:450px;
-    height:450px;
+.signup__orb--1{
+    width:500px;
+    height:500px;
     background:#C9A96E;
-    top:-120px;
-    left:-120px;
+    top:-150px;
+    left:-150px;
 }
 
-.login__orb--2{
+.signup__orb--2{
     width:350px;
     height:350px;
     background:#4A6FA5;
@@ -61,134 +61,136 @@
 
 /* Card */
 
-.login__card{
-    position:relative;
-    z-index:5;
-    width:450px;
+.signup__card{
+    width:520px;
     padding:60px;
     background:rgba(255,255,255,.03);
     border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(20px);
-    border-radius:20px;
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.5);
+    backdrop-filter:blur(18px);
+    border-radius:24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    z-index:5;
 }
 
-/* Top */
+/* Header */
 
-.login__eyebrow{
+.signup__eyebrow{
     color:var(--champagne);
-    font-size:.75rem;
     letter-spacing:.25em;
     text-transform:uppercase;
+    font-size:.75rem;
 }
 
-.login__title{
-    margin-top:20px;
-    font-family:'Cormorant Garamond', serif;
+.signup__title{
+    margin-top:15px;
+    font-family:'Cormorant Garamond',serif;
     font-size:4rem;
-    font-weight:300;
     line-height:.95;
+    font-weight:300;
     color:rgba(245,240,232,.6);
 }
 
-.login__title span{
+.signup__title span{
     display:block;
     color:var(--ivory);
     font-weight:600;
-    -webkit-text-stroke:1px rgba(201,169,110,.2);
+    -webkit-text-stroke:1px rgba(201,169,110,.15);
 }
 
-.login__subtitle{
-    margin-top:20px;
+.signup__subtitle{
+    margin:20px 0 40px;
     color:rgba(245,240,232,.5);
     line-height:1.8;
-    font-size:.95rem;
-    margin-bottom:40px;
 }
 
 /* Inputs */
 
-.login__group{
-    margin-bottom:25px;
+.signup__group{
+    margin-bottom:22px;
 }
 
-.login__group label{
+.signup__group label{
     display:block;
     margin-bottom:10px;
     color:var(--champagne);
-    font-size:.85rem;
-    letter-spacing:.08em;
     text-transform:uppercase;
+    letter-spacing:.08em;
+    font-size:.8rem;
 }
 
-.login__group input{
+.signup__group input{
     width:100%;
     height:58px;
-    padding:0 18px;
-    border:none;
-    outline:none;
     background:rgba(255,255,255,.05);
     border:1px solid rgba(255,255,255,.08);
-    color:var(--ivory);
     border-radius:10px;
+    outline:none;
+    color:var(--ivory);
+    padding:0 18px;
     transition:.3s;
 }
 
-.login__group input::placeholder{
+.signup__group input::placeholder{
     color:#777;
 }
 
-.login__group input:focus{
+.signup__group input:focus{
     border-color:var(--champagne);
-    box-shadow:0 0 20px rgba(201,169,110,.15);
+    box-shadow:0 0 20px rgba(201,169,110,.2);
 }
 
 /* Button */
 
-.login__btn{
+.signup__btn{
     width:100%;
-    margin-top:15px;
     height:58px;
     border:none;
     cursor:pointer;
     background:var(--champagne);
     color:var(--obsidian);
-    font-size:.85rem;
+    font-weight:600;
     letter-spacing:.15em;
     text-transform:uppercase;
-    font-weight:600;
     transition:.4s;
 }
 
-.login__btn:hover{
+.signup__btn:hover{
     transform:translateY(-3px);
     box-shadow:0 15px 40px rgba(201,169,110,.4);
 }
 
-/* Footer */
+/* Message */
 
-.login__footer{
-    margin-top:30px;
-    color:rgba(245,240,232,.5);
+.signup__message{
     text-align:center;
+    margin-top:20px;
+    color:var(--champagne);
+    font-size:.9rem;
 }
 
-.login__footer span{
+/* Footer */
+
+.signup__footer{
+    text-align:center;
+    margin-top:30px;
+    color:rgba(245,240,232,.5);
+}
+
+.signup__footer span{
     color:var(--champagne);
     cursor:pointer;
 }
 
 /* Responsive */
 
-@media(max-width:500px){
+@media(max-width:600px){
 
-    .login__card{
+    .signup__card{
         width:92%;
         padding:40px 30px;
     }
 
-    .login__title{
+    .signup__title{
         font-size:3rem;
     }
 

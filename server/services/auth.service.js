@@ -7,16 +7,23 @@ class AuthService {
 
     }
 
-    static async Signup (userName , email , password , role) {
+    static async Signup (signupCreds) {
         try {
+            const {name, username , email , password , role} = signupCreds;
             const existingUser = await User.findOne({ $or:[{email}]})
             if (existingUser) {
                 return {success:false, already:true, message:"User Already Exists"};
             }
+            const existingUser2 = await User.findOne({ $or:[{username}]})
+            if (existingUser2) {
+                return {success:false, already:true, message:"User Already Exists"};
+            }
+
             const hashedPassword = await hashPassword(password);
 
             const newUser = new User({
-                userName,
+                name,
+                username,
                 email,
                 password:hashedPassword,
                 role
@@ -30,19 +37,22 @@ class AuthService {
         }
     }
 
-    static async Login (userName , password) {
+    static async Login (loginCreds) {
         try {
-            const user = await User.findOne({username: userName})
+            const {username, password} = loginCreds;
+            const user = await User.findOne({username: username})
             if(!user) {
                 return {success:false, user:false, message:"User not found!"}
             }
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return {success:false, message:"Signup Successful!"};
+                return {success:false, message:"Invalid Credentials!", user:true};
             }
+            return {success:true, message:"Login Successful!", user:true};
+
         } catch (error) {
-            console.error("Error While Signup, ", error);
-            return {success:false, message:"User Already Exists"};
+            console.error("Error While Login, ", error);
+            return {success:false, message:"Login Failed!"};
         }
     }
 

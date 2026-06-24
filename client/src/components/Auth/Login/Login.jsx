@@ -1,33 +1,100 @@
-import React from 'react'
-import "./Login.css"
+import React, { useState } from "react";
+import "./Login.css";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 export default function Login() {
+  const [message, setMessage] = useState("");
   const [loginCreds, setLoginCreds] = useState({
-    userName: "",
-    password: ""
-  })
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setLoginCreds((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleLogin = async () => {
     try {
-      const response = await axios
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
+        {loginCreds},
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (!response.data.success) {
+        if (!response.data.user) {
+          setMessage("User Does Not Exist!");
+        } else {
+          setMessage("Invalid credentials!")
+        }
+      } else {
+        
+      }
     } catch (error) {
-      console.error("error while Login, ", error);
+      console.log(error);
     }
-  }
+  };
+
   return (
-   <div className="container">
-  <div className="login-box">
-    <h1>Hotel Transylvania</h1>
-    <h2>Wellcome Back!!</h2>
+    <section className="login">
+      <div className="login__overlay"></div>
 
-    <h3 className='headings'>Username</h3>
-    <input className="text" type="text" placeholder="Enter your Username" />
+      <div className="login__orb login__orb--1"></div>
+      <div className="login__orb login__orb--2"></div>
 
-    <h3 className='headings'>Password</h3>
-    <input  className="text"type="text" placeholder="Enter Your Password" />
-    <button>Login</button>
+      <div className="login__card">
+        <span className="login__eyebrow">
+          HOTEL TRANSYLVANIA
+        </span>
 
-    <p>Dont have an Account?? SignUp</p>
-  </div>
-</div>
-  )
+        <h1 className="login__title">
+          Welcome
+          <span>Back</span>
+        </h1>
+
+        <p className="login__subtitle">
+          Continue your luxury experience and manage your reservations.
+        </p>
+
+        <div className="login__group">
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Enter your username"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="login__group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            onChange={handleChange}
+          />
+        </div>
+
+        <button onClick={handleLogin} className="login__btn">
+          Login →
+        </button>
+
+        <Link to="/auth/signup" style={{textDecoration:"none"}}>
+        <p className="login__footer">
+          Don't have an account?
+          <span> Sign Up</span>
+        </p>
+        </Link>
+      </div>
+    </section>
+  );
 }
