@@ -1,5 +1,5 @@
 const express = require("express")
-const router = express.Router()
+const bookingRoutes = express.Router()
 const Booking = require("../Models/booking.js")
 const bookingSchema = require("../Validations/BookingValidations.js")
 const { validate, validateParam } = require("../middleware/validate.js");
@@ -11,7 +11,7 @@ const idSchema = require("../Validations/ParamValidations.js");
 
 // create booking 
 // Post /booking/Create
-router.post("/Create",validate(bookingSchema),async (req,res) => {
+bookingRoutes.post("/Create",validate(bookingSchema),async (req,res) => {
     try {
         const booking = new Booking(req.body)
         await booking.save()
@@ -22,7 +22,7 @@ router.post("/Create",validate(bookingSchema),async (req,res) => {
 })
 // get all bookings
 // Get /booking/All
-router.get("/All", async (req,res) =>
+bookingRoutes.get("/All", async (req,res) =>
 {
     try {
         const booking = await Booking.find().populate("room")
@@ -33,7 +33,7 @@ router.get("/All", async (req,res) =>
 })
 // get single booking
 // Get /booking/:id
-router.get("/:id",validateParam(idSchema, "params"), async (req,res) =>
+bookingRoutes.get("/:id",validateParam(idSchema, "params"), async (req,res) =>
 {
 try {
     const booking = await Booking.findById(req.params.id).populate("room")
@@ -45,7 +45,7 @@ try {
 })
 // Update booking
 // Put /booking/Update/
-router.put("/Update/:id",validateParam(idSchema, "params"),validate(bookingSchema),  async (req, res) => {
+bookingRoutes.put("/Update/:id",validateParam(idSchema, "params"),validate(bookingSchema),  async (req, res) => {
   try {
     const updatedBooking = await Booking.findByIdAndUpdate(
       req.params.id,
@@ -66,7 +66,7 @@ router.put("/Update/:id",validateParam(idSchema, "params"),validate(bookingSchem
 });
 // delete a room 
 // Delete /booking/:id
-router.delete("/delete/:id",validateParam(idSchema, "params"), async (req,res)=>
+bookingRoutes.delete("/delete/:id",validateParam(idSchema, "params"), async (req,res)=>
 {
     try {
         const deleteBooking = await Booking.findByIdAndDelete(req.params.id)
@@ -76,4 +76,4 @@ router.delete("/delete/:id",validateParam(idSchema, "params"), async (req,res)=>
         res.status(500).json({error : error.message})
     }
 })
-module.exports = router;
+module.exports = bookingRoutes;

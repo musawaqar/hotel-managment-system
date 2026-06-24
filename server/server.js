@@ -11,9 +11,9 @@
 // 9) Test model 
 const express = require("express")
 const mongoose = require("mongoose")
-const roomRoutes = require("./Routes/Room")
-const bookingRoutes = require("./Routes/Booking");
-const authRoutes = require("./Routes/auth")
+const roomRoutes = require("./routes/room.routes")
+const bookingRoutes = require("./routes/booking.routes")
+const authRoutes = require("./routes/auth.routes")
 const app = express()
 app.use(express.json())
 // connect database
@@ -30,7 +30,7 @@ app.use("/booking", bookingRoutes);
 // routes for signup
 app.use("/auth",authRoutes)
 // abhi ke liye port 3000 use ho rha 
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log("Server running on port 3000")
 })
 

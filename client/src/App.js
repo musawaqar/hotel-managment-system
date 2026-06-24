@@ -22,6 +22,12 @@ function App() {
         <Footer/>
         </>
         } />
+        <Route path="/Auth/Login" element={
+          <>
+          <Navbar/>
+          <Login/>
+          </>
+          } />
         <Route path="/Services" element={
           <>
           <Navbar/>

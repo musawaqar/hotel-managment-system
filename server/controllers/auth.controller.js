@@ -1,12 +1,10 @@
-import AuthService from "../services/auth.service.js";
-import { generateToken } from "../utils/generateToken.js";
+const  AuthService = require("../services/auth.service.js");
+const { generateToken } = require ("../utils/generateToken.js");
 
-const User = require("../Models/User.js")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
-const { default: AuthController } = require("../controllers/auth.controller.js");
 
-export const signupController = async(req,res) => {
+const signupController = async(req,res) => {
     try {
         const {userName , email , password , role} = req.body;
         const result = await AuthService.Signup(userName , email , password , role);
@@ -25,18 +23,17 @@ export const signupController = async(req,res) => {
 };
 
 
-export const loginController = async(req,res)=>{
+const loginController = async(req,res)=>{
     try {
-        const {email,password} = req.body
-        const user = await User.findOne({email})
-        if(!user)
-        {
-            return res.status(400).json({message:"User not Found!"})
+        const {userName,password} = req.body
+        const result = await AuthService.Login(userName , password);
+        if (!result.success) {
+            if (result?.already) {
+                res.status(409).json(result);
+            } else {
+                res.status(400).json(result);
+            }
         }
-        const isMatch = await bcrypt.compare(password, user.password);``
-        if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
     const token = await generateToken()
     res.json({ message: "Login successful", userId: user._id });
     } catch (error) {
@@ -44,4 +41,7 @@ export const loginController = async(req,res)=>{
     }
 }
 
-module.exports = router;
+module.exports = {
+    loginController,
+    signupController
+}

@@ -16,9 +16,9 @@ export default function Signup() {
 
   const handleSignup = async() => {
     try {
-      const response = await axios
+      const response = await axios.post(process.env.BACKEND_URL, {userName, email, password, role});
     } catch (error) {
-
+      console.error("Error While Signup, ", error);
     }
   }
   return (

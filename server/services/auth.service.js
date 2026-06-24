@@ -1,6 +1,6 @@
-import User from "../models/User";
-import { hashPassword } from "../utils/hashPassword";
-
+const User = require ("../models/User");
+const hashPassword  =require( "../utils/hashPassword");
+const bcrypt = require( "bcrypt");
 
 class AuthService {
     constructor() {
@@ -50,4 +50,4 @@ class AuthService {
 
 
 
-export default AuthService;
+module.exports = AuthService;

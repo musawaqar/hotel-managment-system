@@ -1,6 +1,6 @@
-import brcypt from "bcrypt";
+const brcypt = require( "bcrypt");
 
-export const hashPassword = async (password) => {
+const hashPassword = async (password) => {
     try {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hashPassword(password, saltRounds);
@@ -11,5 +11,7 @@ export const hashPassword = async (password) => {
         throw new Error("Error while hashing password");
     }
 }
+
+module.exports =hashPassword;
 
 
