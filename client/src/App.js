@@ -10,6 +10,7 @@ import Room from "./components/Room/Room";
 import Footer from "./components/Footer/Footer";
 import Login from "./components/Auth/Login/Login";
 import Signup from "./components/Auth/Signup/Signup";
+import ManageRooms from "./components/ManageRooms/ManageRooms";
 
 function App() {
   return (
@@ -61,6 +62,13 @@ function App() {
           <Booking/>
           </>
           } />
+          <Route path="/managerooms" element = {
+            <>
+            <Navbar/>
+            <ManageRooms/>
+            </>
+          }
+          />
       </Routes>
     </BrowserRouter>
   );

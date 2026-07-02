@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Signup.css";
-import axios from "axios";
+import api from "../../../lib/api";
 
 export default function Signup() {
   const [message, setMessage] = useState("");
@@ -24,8 +24,8 @@ export default function Signup() {
 
   const handleSignup = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`,
+      const response = await api.post(
+        `/auth/signup`,
         {signupCreds}
       );
 

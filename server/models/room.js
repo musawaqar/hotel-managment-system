@@ -1,4 +1,6 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+
+
 const roomSchema = new mongoose.Schema({
     roomNumber:{
         type : Number,
@@ -8,7 +10,7 @@ const roomSchema = new mongoose.Schema({
     roomType:{
      type : String,
      required : true,
-     enum: ["Single", "Double", "Suite"] 
+     enum: ["single", "double", "suite"] 
     },
     roomPrice:{
         type : Number,

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import api from "../../../lib/api";
 
 export default function Login() {
   const [message, setMessage] = useState("");
@@ -21,12 +22,9 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
+      const response = await api.post(
+        `/auth/login`,
         {loginCreds},
-        {
-          withCredentials: true,
-        }
       );
 
       if (!response.data.success) {
