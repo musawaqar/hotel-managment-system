@@ -178,7 +178,16 @@
     color:var(--champagne);
     cursor:pointer;
 }
+.login--modal{
+    min-height:auto;
+    background:none;
+    padding:0;
+}
 
+.login--modal .login__overlay,
+.login--modal .login__orb{
+    display:none;
+}
 /* Responsive */
 
 @media(max-width:500px){

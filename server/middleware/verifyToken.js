@@ -1,6 +1,8 @@
+const { configDotenv } = require("dotenv");
+configDotenv();
 const jwt = require("jsonwebtoken");
 
-const verifyToken = async(req, res, next) => {
+const verifyToken = async (req, res, next) => {
     const token = req.cookies.authToken;
     if (!token) {
         return res.status(401).json({success:false, user:null, message:"Unauthorized"});
@@ -16,4 +18,6 @@ const verifyToken = async(req, res, next) => {
     })
     
 };
+
+module.exports = verifyToken;
 

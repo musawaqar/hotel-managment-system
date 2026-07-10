@@ -35,7 +35,7 @@ const loginController = async(req,res)=>{
             }
         }
     const token = await generateToken(loginCreds.username, "customer");
-    res.cookie('HotelMGTSessionToken', token, {
+    res.cookie('authToken', token, {
         sameSite: 'strict',
         httpOnly: true,
         secure: true,

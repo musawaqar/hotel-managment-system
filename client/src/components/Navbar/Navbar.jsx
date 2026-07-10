@@ -1,17 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import api from "../../lib/api";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Re-check auth on every route change, so login/logout elsewhere
+  // (e.g. LoginModal) is reflected here without a full page reload.
+  useEffect(() => {
+    checkAuth();
+  }, [location.pathname]);
+
+  const checkAuth = async () => {
+    try {
+      await api.get("/protected/protected-route");
+      setIsLoggedIn(true);
+    } catch (error) {
+      setIsLoggedIn(false);
+    } finally {
+      setCheckingAuth(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoggedIn(false);
+      setMenuOpen(false);
+      navigate("/");
+    }
+  };
 
   const links = [
     { to: "/", label: "Home" },
@@ -50,7 +83,15 @@ const Navbar = () => {
 
           {/* CTA */}
           <div className="navbar__actions">
-            <Link to="/auth/login" className="navbar__login">Sign In</Link>
+            {!checkingAuth && (
+              isLoggedIn ? (
+                <button onClick={handleLogout} className="navbar__login navbar__login--btn">
+                  Sign Out
+                </button>
+              ) : (
+                <Link to="/auth/login" className="navbar__login">Sign In</Link>
+              )
+            )}
             <Link to="/booking" className="navbar__reserve">
               Reserve Now
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -80,6 +121,19 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+
+        {!checkingAuth && (
+          isLoggedIn ? (
+            <button className="mobile-drawer__cta mobile-drawer__cta--logout" onClick={handleLogout}>
+              Sign Out
+            </button>
+          ) : (
+            <Link to="/auth/login" className="mobile-drawer__cta mobile-drawer__cta--login" onClick={() => setMenuOpen(false)}>
+              Sign In
+            </Link>
+          )
+        )}
+
         <Link to="/booking" className="mobile-drawer__cta" onClick={() => setMenuOpen(false)}>
           Reserve Now
         </Link>

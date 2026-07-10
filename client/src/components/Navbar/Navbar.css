@@ -229,6 +229,20 @@ body {
   transition: color 0.3s;
 }
 
+.navbar__login--btn {
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mobile-drawer__cta--logout {
+  background: none;
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  cursor: pointer;
+  font: inherit;
+}
+
 .mobile-drawer__links a:hover { color: var(--champagne); }
 
 .mobile-drawer__cta {

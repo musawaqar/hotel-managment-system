@@ -6,23 +6,23 @@ const bookingSchema = new mongoose.Schema({
         ref: "Room",
         required: true
     },
-    CustomerName:{
+    customerName:{
         type: String,
         required: true
     },
-    CustomerEmail:{
+    customerEmail:{
         type: String,
         required: true
     },
-    CustomerPhone:{
+    customerPhone:{
         type: String,
         required: true
     },
-    CheckInDate:{
+    checkInDate:{
         type: Date,
         required: true
     },
-    CheckOutDate:{
+    checkOutDate:{
         type: Date,
         required: true
     },
@@ -31,7 +31,7 @@ const bookingSchema = new mongoose.Schema({
         enum: ["Booked","CheckedIn","CheckedOut","Cancelled"],
         default: "Booked"
     },
-    CreatedAt:{
+    createdAt:{
         type: Date,
         default: Date.now
     }

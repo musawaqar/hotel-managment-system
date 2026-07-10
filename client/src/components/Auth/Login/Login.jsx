@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import "./Login.css";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../../lib/api";
 
-export default function Login() {
+export default function Login({ modal = false }) {
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState(""); // "success" | "error"
   const [loginCreds, setLoginCreds] = useState({
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,36 +24,39 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await api.post(
-        `/auth/login`,
-        {loginCreds},
-      );
+      const response = await api.post(`/auth/login`, { loginCreds });
 
       if (!response.data.success) {
+        setMessageType("error");
         if (!response.data.user) {
           setMessage("User Does Not Exist!");
         } else {
-          setMessage("Invalid credentials!")
+          setMessage("Invalid credentials!");
         }
       } else {
-        
+        setMessageType("success");
+        setMessage("Login successful! Redirecting…");
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
       }
     } catch (error) {
       console.log(error);
+      setMessageType("error");
+      setMessage("Something went wrong. Please try again.");
     }
   };
 
   return (
-    <section className="login">
+    <section className={modal ? "login login__modal" : "login"}>
       <div className="login__overlay"></div>
 
       <div className="login__orb login__orb--1"></div>
       <div className="login__orb login__orb--2"></div>
 
       <div className="login__card">
-        <span className="login__eyebrow">
-          HOTEL TRANSYLVANIA
-        </span>
+        <span className="login__eyebrow">HOTEL TRANSYLVANIA</span>
 
         <h1 className="login__title">
           Welcome
@@ -82,15 +87,27 @@ export default function Login() {
           />
         </div>
 
+        {message && (
+          <p
+            className={
+              messageType === "success"
+                ? "login__success"
+                : "login__error"
+            }
+          >
+            {message}
+          </p>
+        )}
+
         <button onClick={handleLogin} className="login__btn">
           Login →
         </button>
 
-        <Link to="/auth/signup" style={{textDecoration:"none"}}>
-        <p className="login__footer">
-          Don't have an account?
-          <span> Sign Up</span>
-        </p>
+        <Link to="/auth/signup" style={{ textDecoration: "none" }}>
+          <p className="login__footer">
+            Don't have an account?
+            <span> Sign Up</span>
+          </p>
         </Link>
       </div>
     </section>
