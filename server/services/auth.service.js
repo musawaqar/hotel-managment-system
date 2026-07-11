@@ -48,7 +48,7 @@ class AuthService {
             if (!isMatch) {
                 return {success:false, message:"Invalid Credentials!", user:true};
             }
-            return {success:true, message:"Login Successful!", user:true};
+            return {success:true, message:"Login Successful!", user:true, email:user.email};
 
         } catch (error) {
             console.error("Error While Login, ", error);

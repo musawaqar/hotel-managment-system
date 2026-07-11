@@ -52,7 +52,7 @@ export default function Services() {
         </div>
 
         <h1 className="services__title">
-          Why <em>Hotel Transylvania</em>
+          Why <em>Luxe Stay</em>
         </h1>
 
         <p className="services__subtitle">

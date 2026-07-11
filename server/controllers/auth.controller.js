@@ -34,7 +34,7 @@ const loginController = async(req,res)=>{
                 res.status(400).json(result);
             }
         }
-    const token = await generateToken(loginCreds.username, "customer");
+    const token = await generateToken(loginCreds.username, result.email, "customer",);
     res.cookie('authToken', token, {
         sameSite: 'strict',
         httpOnly: true,

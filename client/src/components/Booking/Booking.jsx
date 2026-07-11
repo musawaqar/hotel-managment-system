@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import api from "../../lib/api";
 import LoginModal from "../Auth/Login/LognModal";
 import "./Booking.css";
+import { useParams } from "react-router-dom";
 
 export default function Booking() {
   const [rooms, setRooms] = useState([]);
   const [showLogin, setShowLogin] = useState(false);
   const [status, setStatus] = useState({ type: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
-
+  const userEmail = Cookies.get("userEmail");
+  const {roomId} = useParams();
   const [bookingForm, setBookingForm] = useState({
     room: "",
     customerName: "",
-    customerEmail: "",
+    customerEmail: userEmail,
     customerPhone: "",
     checkInDate: "",
     checkOutDate: "",
@@ -71,8 +74,9 @@ export default function Booking() {
       setSubmitting(false);
     }
   };
+  const roomToFind = bookingForm.room || (roomId && decodeURIComponent(roomId));
 
-  const selectedRoom = rooms.find((room) => room._id === bookingForm.room);
+  const selectedRoom = rooms.find((room) => room._id === roomToFind);
 
   return (
     <div className="rooms-admin">
@@ -163,7 +167,7 @@ export default function Booking() {
                 type="email"
                 placeholder="jane@example.com"
                 value={bookingForm.customerEmail}
-                onChange={handleChange}
+                readOnly
               />
             </div>
 

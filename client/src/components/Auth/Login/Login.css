@@ -14,7 +14,7 @@
 }
 
 .login{
-    min-height:100vh;
+    min-height:140vh;
     background: var(--obsidian);
     position:relative;
     display:flex;

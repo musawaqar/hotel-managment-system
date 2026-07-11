@@ -12,6 +12,7 @@ const verifyToken = async (req, res, next) => {
         if (error) {
             return res.status(403).json({success:false, user:null, message:"Forbidden"});
         }
+        req.email = decoded.email;
         req.username = decoded.username;
         req.role = decoded.role;
         next();

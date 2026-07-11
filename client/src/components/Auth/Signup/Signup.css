@@ -14,7 +14,7 @@
 }
 
 .signup{
-    min-height:100vh;
+    min-height:140vh;
     background:var(--obsidian);
     display:flex;
     justify-content:center;

@@ -31,6 +31,7 @@ const getAllBookings = async (req, res) => {
     }
 };
 
+
 // Get Booking By ID
 const getBookingById = async (req, res) => {
     try {
@@ -50,6 +51,24 @@ const getBookingById = async (req, res) => {
     }
 };
 
+// Get Booking By ID
+const getBookingsByEmail = async (req, res) => {
+    try {
+        const booking = await bookingService.getBookingsByEmail(req.email);
+
+        if (!booking) {
+            return res.status(404).json({
+                error: "Booking not found.",
+            });
+        }
+
+        res.status(200).json(booking);
+    } catch (error) {
+        res.status(500).json({
+            error: error.message,
+        });
+    }
+};
 // Update Booking
 const updateBooking = async (req, res) => {
     try {
@@ -100,6 +119,7 @@ module.exports = {
     createBooking,
     getAllBookings,
     getBookingById,
+    getBookingsByEmail,
     updateBooking,
     deleteBooking,
 };

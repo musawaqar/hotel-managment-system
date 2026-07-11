@@ -1,0 +1,415 @@
+/* ── Tokens (shared with hero / rooms-admin) ────
+   --obsidian:  #0A0A0F
+   --ivory:     #F5F0E8
+   --champagne: #C9A96E
+   --slate:     #8A8A94
+   --emerald:   #5B8C6E   (confirmed)
+   --wine:      #A65D57   (cancelled/occupied)
+   ------------------------------------------------ */
+
+.my-bookings {
+  --obsidian: #0A0A0F;
+  --ivory: #F5F0E8;
+  --champagne: #C9A96E;
+  --slate: #8A8A94;
+  --emerald: #5B8C6E;
+  --wine: #A65D57;
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+
+  min-height: 100vh;
+  background: var(--obsidian);
+  color: var(--ivory);
+  font-family: 'Inter', -apple-system, sans-serif;
+  padding: 64px 48px 96px;
+  position: relative;
+}
+
+/* ── Ambient orb, echoing the hero background ── */
+.my-bookings__orb {
+  position: fixed;
+  top: -120px;
+  right: -120px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #C9A96E, transparent 70%);
+  filter: blur(90px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.my-bookings__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ── Header ─────────────────────────────────── */
+.my-bookings__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--champagne);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.my-bookings__eyebrow-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--champagne);
+  opacity: 0.6;
+}
+
+.my-bookings__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  color: var(--ivory);
+  letter-spacing: -0.02em;
+  -webkit-text-stroke: 1px rgba(201, 169, 110, 0.12);
+  margin-bottom: 48px;
+}
+
+.my-bookings__title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--champagne);
+  -webkit-text-stroke: 0;
+}
+
+/* ── Layout: edit form rail + booking grid ─── */
+.my-bookings__layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.my-bookings__layout--full {
+  grid-template-columns: 1fr;
+}
+
+/* ── Edit form panel ────────────────────────── */
+.booking-form {
+  position: sticky;
+  top: 48px;
+  background: rgba(245, 240, 232, 0.03);
+  border: 1px solid rgba(201, 169, 110, 0.18);
+  border-radius: 2px;
+  padding: 36px 32px;
+}
+
+.booking-form__heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--ivory);
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.booking-form__label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate);
+  margin-bottom: 8px;
+}
+
+.booking-form__field {
+  margin-bottom: 22px;
+}
+
+.booking-form__input,
+.booking-form__select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  color: var(--ivory);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  padding: 13px 14px;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.booking-form__input::placeholder {
+  color: rgba(245, 240, 232, 0.3);
+}
+
+.booking-form__input:focus,
+.booking-form__select:focus {
+  outline: none;
+  border-color: var(--champagne);
+  background: rgba(201, 169, 110, 0.05);
+}
+
+.booking-form__select option {
+  background: var(--obsidian);
+  color: var(--ivory);
+}
+
+.booking-form__submit {
+  width: 100%;
+  background: var(--champagne);
+  color: var(--obsidian);
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 15px 0;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s;
+}
+
+.booking-form__submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(201, 169, 110, 0.35);
+}
+
+.booking-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.booking-form__cancel {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate);
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.booking-form__cancel:hover {
+  color: var(--ivory);
+}
+
+/* ── Inline form status message ────────────── */
+.booking-form__status {
+  margin: 16px 0 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.booking-form__status--success {
+  color: var(--emerald);
+}
+
+.booking-form__status--error {
+  color: var(--wine);
+}
+
+/* ── Booking grid ───────────────────────────── */
+.bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.bookings-grid__empty {
+  color: var(--slate);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  grid-column: 1 / -1;
+  padding: 40px 0;
+  text-align: center;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+/* Each card reads like a folio: room number stamped large, a gold rule,
+   then guest + stay details underneath. */
+.booking-card {
+  position: relative;
+  background: rgba(245, 240, 232, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  padding: 26px 24px 22px;
+  transition: border-color 0.3s, transform 0.3s var(--ease-smooth);
+}
+
+.booking-card:hover {
+  border-color: rgba(201, 169, 110, 0.35);
+  transform: translateY(-3px);
+}
+
+.booking-card--editing {
+  border-color: var(--champagne);
+  background: rgba(201, 169, 110, 0.06);
+  box-shadow: 0 12px 32px rgba(201, 169, 110, 0.18);
+}
+
+.booking-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.booking-card__number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ivory);
+  -webkit-text-stroke: 1px rgba(201, 169, 110, 0.15);
+}
+
+.booking-card__type {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin: 6px 0 16px;
+}
+
+.booking-card__rule {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 16px;
+}
+
+/* ── Guest + stay details ───────────────────── */
+.booking-card__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.78rem;
+  color: var(--ivory);
+  margin-bottom: 10px;
+}
+
+.booking-card__row-label {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate);
+  white-space: nowrap;
+}
+
+.booking-card__row-value {
+  text-align: right;
+}
+
+.booking-card__dates {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--ivory);
+  margin: 4px 0 16px;
+}
+
+.booking-card__dates-arrow {
+  color: var(--champagne);
+  font-size: 0.8rem;
+}
+
+.booking-card__contact {
+  font-size: 0.72rem;
+  color: var(--slate);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+/* ── Status pill ────────────────────────────── */
+.booking-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.booking-card__status--confirmed,
+.booking-card__status--available {
+  color: var(--emerald);
+  background: rgba(91, 140, 110, 0.12);
+  border: 1px solid rgba(91, 140, 110, 0.3);
+}
+
+.booking-card__status--cancelled,
+.booking-card__status--occupied {
+  color: var(--wine);
+  background: rgba(166, 93, 87, 0.12);
+  border: 1px solid rgba(166, 93, 87, 0.3);
+}
+
+.booking-card__status--pending {
+  color: var(--champagne);
+  background: rgba(201, 169, 110, 0.12);
+  border: 1px solid rgba(201, 169, 110, 0.3);
+}
+
+/* ── Actions ────────────────────────────────── */
+.booking-card__actions {
+  display: flex;
+  gap: 18px;
+}
+
+.booking-card__action {
+  background: none;
+  border: none;
+  padding: 0 0 2px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.55);
+  border-bottom: 1px solid rgba(245, 240, 232, 0.2);
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.booking-card__action:hover {
+  color: var(--ivory);
+  border-color: var(--champagne);
+}
+
+.booking-card__action--danger:hover {
+  color: var(--wine);
+  border-color: var(--wine);
+}
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 860px) {
+  .my-bookings { padding: 40px 20px 72px; }
+  .my-bookings__layout { grid-template-columns: 1fr; }
+  .booking-form { position: static; }
+}
+
+@media (max-width: 480px) {
+  .bookings-grid { grid-template-columns: 1fr; }
+}

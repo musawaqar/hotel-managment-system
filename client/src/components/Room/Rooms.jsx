@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../lib/api";
 import "./Rooms.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Rooms() {
   const [rooms, setRooms] = useState([]);
@@ -10,7 +11,7 @@ export default function Rooms() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [availableOnly, setAvailableOnly] = useState(false);
   const [sortBy, setSortBy] = useState("default");
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchRooms();
   }, []);
@@ -28,6 +29,10 @@ export default function Rooms() {
     }
   };
 
+  const moveToBooking = (roomId) => {
+    navigate(`/booking/${encodeURIComponent(roomId)}`)
+  }
+
   const filteredRooms = rooms
     .filter((room) => (typeFilter === "all" ? true : room.roomType === typeFilter))
     .filter((room) => (availableOnly ? room.roomIsAvailable : true))
@@ -36,6 +41,8 @@ export default function Rooms() {
       if (sortBy === "priceHigh") return b.roomPrice - a.roomPrice;
       return 0;
     });
+
+
 
   return (
     <div className="rooms-browse">
@@ -184,6 +191,7 @@ export default function Rooms() {
                     <button
                       className="room-view-card__book"
                       disabled={!room.roomIsAvailable}
+                      onClick={() => moveToBooking(room._id)}
                     >
                       {room.roomIsAvailable ? "Book Now" : "Unavailable"}
                     </button>

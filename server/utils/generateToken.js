@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken")
 
-const generateToken = async (username, role) => {
+const generateToken = async (username, email, role) => {
     try {
-        const token = jwt.sign({username, role}, process.env.JWT_SECRET, {expiresIn: "7d"});
+        const token = jwt.sign({username, email, role}, process.env.JWT_SECRET, {expiresIn: "7d"});
         return token;
     } catch (error) {
         console.error("Error while making token, ", error);

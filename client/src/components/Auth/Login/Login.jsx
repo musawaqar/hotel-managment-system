@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import {toast} from "react-toastify";
 import api from "../../../lib/api";
 
 export default function Login({ modal = false }) {
-  const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState(""); // "success" | "error"
   const [loginCreds, setLoginCreds] = useState({
     username: "",
     password: "",
@@ -27,15 +27,15 @@ export default function Login({ modal = false }) {
       const response = await api.post(`/auth/login`, { loginCreds });
 
       if (!response.data.success) {
-        setMessageType("error");
         if (!response.data.user) {
-          setMessage("User Does Not Exist!");
+          toast.error("User does not exist!");
         } else {
-          setMessage("Invalid credentials!");
+          toast.error("Invalid username or password!");
         }
+        return;
       } else {
-        setMessageType("success");
-        setMessage("Login successful! Redirecting…");
+        Cookies.set("userEmail", response.data.email);
+        toast.success("Login Successful!");
 
         setTimeout(() => {
           navigate("/");
@@ -43,8 +43,8 @@ export default function Login({ modal = false }) {
       }
     } catch (error) {
       console.log(error);
-      setMessageType("error");
-      setMessage("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
+
     }
   };
 
@@ -56,7 +56,7 @@ export default function Login({ modal = false }) {
       <div className="login__orb login__orb--2"></div>
 
       <div className="login__card">
-        <span className="login__eyebrow">HOTEL TRANSYLVANIA</span>
+        <span className="login__eyebrow">Luxe Stay</span>
 
         <h1 className="login__title">
           Welcome
@@ -86,18 +86,6 @@ export default function Login({ modal = false }) {
             onChange={handleChange}
           />
         </div>
-
-        {message && (
-          <p
-            className={
-              messageType === "success"
-                ? "login__success"
-                : "login__error"
-            }
-          >
-            {message}
-          </p>
-        )}
 
         <button onClick={handleLogin} className="login__btn">
           Login →

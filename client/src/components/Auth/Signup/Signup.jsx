@@ -1,9 +1,12 @@
 import { useState } from "react";
 import "./Signup.css";
 import api from "../../../lib/api";
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const [signupCreds, setSignupCreds] = useState({
     name: "",
@@ -31,12 +34,16 @@ export default function Signup() {
 
       if (!response.data.success) {
         if (response.data.already) {
-          setMessage("Username or Email already exists!");
+          toast.error("Username or Email already exists!");
         } else {
-          setMessage("Something went wrong!");
+          toast.error("Something went wrong!");
         }
       } else {
-        setMessage("Account created successfully!");
+        toast.success("Account created successfully!");
+        setTimeout(() => {
+          navigate('/auth/login')
+        }, 1500)
+        
       }
     } catch (error) {
       console.error("Error While Signup:", error);
@@ -53,7 +60,7 @@ export default function Signup() {
 
       <div className="signup__card">
         <span className="signup__eyebrow">
-          HOTEL TRANSYLVANIA
+          Luxe Stay
         </span>
 
         <h1 className="signup__title">
@@ -114,11 +121,12 @@ export default function Signup() {
             {message}
           </p>
         )}
-
+        <Link to="/auth/login" style={{textDecoration: "none"}}>
         <p className="signup__footer">
           Already have an account?
           <span> Login</span>
         </p>
+        </Link>
       </div>
     </section>
   );

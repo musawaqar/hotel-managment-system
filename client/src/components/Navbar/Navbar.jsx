@@ -50,6 +50,7 @@ const Navbar = () => {
     { to: "/", label: "Home" },
     { to: "/rooms", label: "Rooms" },
     { to: "/booking", label: "Booking" },
+    { to: "/mybookings", label: "My Bookings" },
     { to: "/services", label: "Services" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
