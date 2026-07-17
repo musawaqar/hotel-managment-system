@@ -2,6 +2,7 @@ const express = require("express");
 const bookingRoutes = express.Router();
 
 const bookingController = require("../controllers/booking.controller");
+
 const verifyToken = require("../middleware/verifyToken");
 
 bookingRoutes.post("/createBooking", bookingController.createBooking);

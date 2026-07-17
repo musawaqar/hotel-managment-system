@@ -1,0 +1,215 @@
+
+
+
+
+/* ─────────────────────────────────────────────
+   Dashboard Statistics
+─────────────────────────────────────────────*/
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+  margin-bottom: 56px;
+}
+
+.dashboard-stat {
+  background: rgba(245, 240, 232, 0.03);
+  border: 1px solid rgba(201, 169, 110, 0.12);
+  padding: 26px 28px;
+  transition: all .35s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-stat::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--champagne);
+  opacity: .8;
+}
+
+.dashboard-stat:hover {
+  border-color: rgba(201,169,110,.35);
+  transform: translateY(-4px);
+}
+
+.dashboard-stat span {
+  display: block;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  color: var(--slate);
+  margin-bottom: 12px;
+}
+
+.dashboard-stat h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--ivory);
+  line-height: 1;
+}
+
+
+/* ─────────────────────────────────────────────
+   Dashboard Grid
+─────────────────────────────────────────────*/
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(270px,1fr));
+  gap: 24px;
+}
+
+
+/* ─────────────────────────────────────────────
+   Dashboard Card
+─────────────────────────────────────────────*/
+
+.dashboard-card {
+  position: relative;
+  background: rgba(245,240,232,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  padding: 34px 30px;
+  transition: all .4s var(--ease-smooth);
+  overflow: hidden;
+}
+
+.dashboard-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: linear-gradient(
+      90deg,
+      transparent,
+      var(--champagne),
+      transparent
+  );
+  transform: scaleX(0);
+  transition: .35s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(201,169,110,.35);
+}
+
+.dashboard-card:hover::after {
+  transform: scaleX(1);
+}
+
+
+/* Gold Accent */
+
+.dashboard-card__icon {
+  width: 66px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 28px;
+  transition: .35s;
+}
+
+.dashboard-card:hover .dashboard-card__icon {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.dashboard-card__icon svg {
+  stroke-width: 1.7;
+}
+
+
+/* Color Variants */
+
+.dashboard-card__icon.champagne {
+  color: var(--champagne);
+  background: rgba(201,169,110,.12);
+  border: 1px solid rgba(201,169,110,.3);
+}
+
+.dashboard-card__icon.emerald {
+  color: var(--emerald);
+  background: rgba(91,140,110,.12);
+  border: 1px solid rgba(91,140,110,.3);
+}
+
+.dashboard-card__icon.wine {
+  color: var(--wine);
+  background: rgba(166,93,87,.12);
+  border: 1px solid rgba(166,93,87,.3);
+}
+
+
+/* Typography */
+
+.dashboard-card h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--ivory);
+  margin-bottom: 14px;
+}
+
+.dashboard-card p {
+  color: var(--slate);
+  line-height: 1.8;
+  font-size: .92rem;
+  margin-bottom: 30px;
+}
+
+
+/* Button */
+
+.dashboard-card__button {
+  background: transparent;
+  color: var(--champagne);
+  border: 1px solid rgba(201,169,110,.3);
+  padding: 13px 26px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  transition: all .3s;
+}
+
+.dashboard-card__button:hover {
+  background: var(--champagne);
+  color: var(--obsidian);
+  border-color: var(--champagne);
+  box-shadow: 0 10px 30px rgba(201,169,110,.25);
+}
+
+
+/* ─────────────────────────────────────────────
+   Responsive
+─────────────────────────────────────────────*/
+
+@media (max-width:900px){
+
+    .dashboard-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media (max-width:650px){
+
+    .dashboard-stats{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-card{
+        padding:28px 24px;
+    }
+
+}

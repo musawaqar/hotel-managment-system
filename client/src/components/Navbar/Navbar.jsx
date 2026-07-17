@@ -7,6 +7,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("customer");
   const [checkingAuth, setCheckingAuth] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,8 +26,9 @@ const Navbar = () => {
 
   const checkAuth = async () => {
     try {
-      await api.get("/protected/protected-route");
+      const response = await api.get("/protected/protected-route");
       setIsLoggedIn(true);
+      setRole(response.data.role);
     } catch (error) {
       setIsLoggedIn(false);
     } finally {
@@ -80,6 +82,21 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            {isLoggedIn && role === "admin" && (
+    <li>
+      <Link
+        to="/admin/dashboard"
+        className={`navbar__link ${
+          location.pathname.startsWith("/admin")
+            ? "navbar__link--active"
+            : ""
+        }`}
+      >
+        Admin Dashboard
+        <span className="navbar__link-bar" />
+      </Link>
+    </li>
+  )}
           </ul>
 
           {/* CTA */}
@@ -121,6 +138,16 @@ const Navbar = () => {
               <Link to={to} onClick={() => setMenuOpen(false)}>{label}</Link>
             </li>
           ))}
+           {isLoggedIn && role === "admin" && (
+    <li style={{ "--i": links.length }}>
+      <Link
+        to="/admin/dashboard"
+        onClick={() => setMenuOpen(false)}
+      >
+        Admin Dashboard
+      </Link>
+    </li>
+  )}
         </ul>
 
         {!checkingAuth && (

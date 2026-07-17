@@ -34,7 +34,7 @@ const loginController = async(req,res)=>{
                 res.status(400).json(result);
             }
         }
-    const token = await generateToken(loginCreds.username, result.email, "customer",);
+    const token = await generateToken(loginCreds.username, result.email, result.role);
     res.cookie('authToken', token, {
         sameSite: 'strict',
         httpOnly: true,
@@ -48,7 +48,24 @@ const loginController = async(req,res)=>{
     }
 }
 
+const logoutController = async (req, res) => {
+    try {
+        res.clearCookie('authToken', {
+            sameSite: 'strict',
+            httpOnly: true,
+            secure: true,
+            path:'/'
+        });
+        res.status(200).json({success:true, message: "Logged out successfuly"})
+    } catch (error) {
+        console.error("Error while logging out, ", error);
+        res.status(500).json({success:false, message: "Logged out failed!"})
+
+    }
+}
+
 module.exports = {
     loginController,
-    signupController
+    signupController,
+    logoutController
 }
