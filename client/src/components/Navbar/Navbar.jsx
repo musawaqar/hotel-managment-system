@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import api from "../../lib/api";
 import "./Navbar.css";
 
@@ -65,8 +66,10 @@ const Navbar = () => {
 
           {/* Logo */}
           <Link to="/" className="navbar__logo">
-            <span className="navbar__logo-mark">L</span>
-            <span className="navbar__logo-text">uxe<em>Stay</em></span>
+            <span className="navbar__logo-eyebrow">Five Star Hospitality</span>
+            <span className="navbar__logo-wordmark">
+              Luxe<em>Stay</em>
+            </span>
           </Link>
 
           {/* Desktop Links */}
@@ -83,20 +86,20 @@ const Navbar = () => {
               </li>
             ))}
             {isLoggedIn && role === "admin" && (
-    <li>
-      <Link
-        to="/admin/dashboard"
-        className={`navbar__link ${
-          location.pathname.startsWith("/admin")
-            ? "navbar__link--active"
-            : ""
-        }`}
-      >
-        Admin Dashboard
-        <span className="navbar__link-bar" />
-      </Link>
-    </li>
-  )}
+              <li>
+                <Link
+                  to="/admin/dashboard"
+                  className={`navbar__link ${
+                    location.pathname.startsWith("/admin")
+                      ? "navbar__link--active"
+                      : ""
+                  }`}
+                >
+                  Admin Dashboard
+                  <span className="navbar__link-bar" />
+                </Link>
+              </li>
+            )}
           </ul>
 
           {/* CTA */}
@@ -112,9 +115,7 @@ const Navbar = () => {
             )}
             <Link to="/booking" className="navbar__reserve">
               Reserve Now
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <ArrowRight className="navbar__reserve-icon" size={14} strokeWidth={2} aria-hidden="true" />
             </Link>
           </div>
 
@@ -138,16 +139,16 @@ const Navbar = () => {
               <Link to={to} onClick={() => setMenuOpen(false)}>{label}</Link>
             </li>
           ))}
-           {isLoggedIn && role === "admin" && (
-    <li style={{ "--i": links.length }}>
-      <Link
-        to="/admin/dashboard"
-        onClick={() => setMenuOpen(false)}
-      >
-        Admin Dashboard
-      </Link>
-    </li>
-  )}
+          {isLoggedIn && role === "admin" && (
+            <li style={{ "--i": links.length }}>
+              <Link
+                to="/admin/dashboard"
+                onClick={() => setMenuOpen(false)}
+              >
+                Admin Dashboard
+              </Link>
+            </li>
+          )}
         </ul>
 
         {!checkingAuth && (
@@ -164,6 +165,7 @@ const Navbar = () => {
 
         <Link to="/booking" className="mobile-drawer__cta" onClick={() => setMenuOpen(false)}>
           Reserve Now
+          <ArrowRight className="mobile-drawer__cta-icon" size={14} strokeWidth={2} aria-hidden="true" />
         </Link>
       </div>
     </>
