@@ -46,50 +46,41 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   height: 100%;
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  display: flex;
   align-items: center;
-  column-gap: 40px;
-  overflow: hidden;
+  justify-content: space-between;
+  gap: 32px;
 }
 
 /* ── Logo ────────────────────────────────── */
 .navbar__logo {
   text-decoration: none;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2px;
-  flex-shrink: 0;
-  width: max-content;
-  max-width: 100%;
-  line-height: 1.1;
+  align-items: baseline;
+  gap: 1px;
+  flex: 0 0 auto;
   position: relative;
   z-index: 2;
-  overflow: hidden;
 }
 
-.navbar__logo-eyebrow {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--champagne);
-  white-space: nowrap;
-}
-
-.navbar__logo-wordmark {
+.navbar__logo-mark {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.55rem;
-  font-weight: 400;
+  font-size: 2.2rem;
+  font-weight: 300;
   color: var(--champagne);
+  line-height: 1;
+}
+
+.navbar__logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem;
+  font-weight: 300;
+  color: var(--ivory);
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
 
-.navbar__logo-wordmark em {
+.navbar__logo-text em {
   font-style: italic;
   color: var(--champagne);
 }
@@ -99,14 +90,15 @@ body {
   display: flex;
   list-style: none;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+  flex: 1 1 auto;
   flex-wrap: nowrap;
-  gap: clamp(14px, 1.4vw, 26px);
+  gap: clamp(16px, 1.8vw, 32px);
   min-width: 0;
-  overflow: hidden;
+  margin: 0;
+  padding: 0 16px;
   position: relative;
   z-index: 1;
-  padding-left: 12px;
 }
 
 .navbar__link {
@@ -306,10 +298,6 @@ body {
 @media (max-width: 1200px) {
   .navbar__links,
   .navbar__actions { display: none; }
-  .navbar__inner {
-    grid-template-columns: 1fr auto;
-    column-gap: 16px;
-  }
   .navbar__burger { display: flex; }
   .navbar { padding: 0 24px; }
 }

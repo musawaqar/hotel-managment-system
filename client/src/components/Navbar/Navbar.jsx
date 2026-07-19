@@ -66,10 +66,8 @@ const Navbar = () => {
 
           {/* Logo */}
           <Link to="/" className="navbar__logo">
-            <span className="navbar__logo-eyebrow">Five Star Hospitality</span>
-            <span className="navbar__logo-wordmark">
-              Luxe<em>Stay</em>
-            </span>
+            <span className="navbar__logo-mark">L</span>
+            <span className="navbar__logo-text">uxe<em>Stay</em></span>
           </Link>
 
           {/* Desktop Links */}
