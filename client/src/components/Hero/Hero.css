@@ -251,6 +251,13 @@
   margin-left: 2px;
 }
 
+.hero__stat-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 4px;
+  color: var(--champagne);
+}
+
 .hero__stat-label {
   font-size: 0.72rem;
   font-weight: 500;

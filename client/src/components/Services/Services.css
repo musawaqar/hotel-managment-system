@@ -100,8 +100,21 @@
 }
 
 .service-card__icon {
-  font-size: 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   margin-bottom: 18px;
+  color: var(--champagne);
+  border: 1px solid rgba(201, 169, 110, 0.35);
+  border-radius: 2px;
+  background: rgba(201, 169, 110, 0.08);
+}
+
+.service-card__icon svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 .service-card__title {

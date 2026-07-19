@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Star } from "lucide-react";
 import "./Hero.css";
 const Hero = () => {
   const statsRef = useRef(null);
@@ -67,7 +68,19 @@ const Hero = () => {
           {[
             { value: "98", suffix: "%", label: "Guest Satisfaction" },
             { value: "142", suffix: "+", label: "Luxury Suites" },
-            { value: "3", suffix: "★", label: "Michelin Restaurants" },
+            {
+              value: "3",
+              suffix: (
+                <Star
+                  className="hero__stat-icon"
+                  size={14}
+                  strokeWidth={2}
+                  fill="currentColor"
+                  aria-hidden="true"
+                />
+              ),
+              label: "Michelin Restaurants",
+            },
             { value: "20", suffix: "yr", label: "of Excellence" },
           ].map(({ value, suffix, label }) => (
             <div className="hero__stat" key={label}>
