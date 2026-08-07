@@ -5,6 +5,8 @@ import LoginModal from "../Auth/Login/LognModal";
 import "./Booking.css";
 import { useParams } from "react-router-dom";
 
+
+
 export default function Booking() {
   const [rooms, setRooms] = useState([]);
   const [showLogin, setShowLogin] = useState(false);
@@ -298,7 +300,7 @@ export default function Booking() {
 
                 {room.roomPrice && (
                   <div className="room-card__price">
-                    ${room.roomPrice}
+                    Rs. {room.roomPrice}
                     <span>/ night</span>
                   </div>
                 )}

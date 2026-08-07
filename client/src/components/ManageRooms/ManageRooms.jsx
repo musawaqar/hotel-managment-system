@@ -431,7 +431,7 @@ export default function ManageRooms() {
                 <div className="room-card__rule" />
 
                 <div className="room-card__price">
-                  ${room.roomPrice}
+                  Rs. {room.roomPrice}
                   <span>/ night</span>
                 </div>
 

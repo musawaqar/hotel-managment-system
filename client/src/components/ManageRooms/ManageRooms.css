@@ -165,6 +165,14 @@
   cursor: pointer;
 }
 
+.rooms-form__image-preview{
+  width:150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
 .rooms-form__check input {
   width: 16px;
   height: 16px;

@@ -13,6 +13,7 @@ import ManageRooms from "./components/ManageRooms/ManageRooms";
 import Rooms from "./components/Room/Rooms";
 import MyBookings from "./components/MyBookings/MyBookings";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import ManageBookings from "./components/ManageBookings/ManageBookings";
 
 function App() {
   return (
@@ -95,6 +96,14 @@ function App() {
             <>
             <Navbar/>
             <ManageRooms/>
+            <Footer/>
+            </>
+          }
+          />
+          <Route path="/admin/managebookings" element = {
+            <>
+            <Navbar/>
+            <ManageBookings/>
             <Footer/>
             </>
           }

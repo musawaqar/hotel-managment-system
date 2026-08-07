@@ -38,7 +38,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await api.post("/auth/logout");
+      await api.get("/auth/logout");
     } catch (error) {
       console.log(error);
     } finally {

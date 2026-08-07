@@ -1,24 +1,12 @@
-
-
-
-
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   BedDouble,
   CalendarCheck,
-  Users,
-  CreditCard,
-  ConciergeBell,
-  UtensilsCrossed,
-  Hotel,
-  Bell,
-  ClipboardList,
-  Star,
-  Settings,
-  BarChart3,
 } from "lucide-react";
 import "./AdminDashboard.css";
 import { useNavigate } from "react-router-dom";
+import api from "../../lib/api";
 
 const modules = [
   {
@@ -35,26 +23,103 @@ const modules = [
     link: "/admin/managebookings",
     color: "champagne",
   },
-  
-];
-
-const stats = [
-  { label: "Available Rooms", value: "84" },
-  { label: "Occupied", value: "52" },
-  { label: "Today's Check-ins", value: "17" },
-  { label: "Revenue Today", value: "$8,420" },
 ];
 
 const AdminDashboard = () => {
-    const navigate = useNavigate();
-    const moveTo = (link) => {
-        navigate(link);
+  const navigate = useNavigate();
+
+  const [stats, setStats] = useState([
+    { label: "Available Rooms", value: 0 },
+    { label: "Occupied", value: 0 },
+    { label: "Today's Check-ins", value: 0 },
+    { label: "Revenue Today", value: "$0" },
+  ]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const [roomsRes, bookingsRes] = await Promise.all([
+        api.get("/room/rooms"),
+        api.get("/booking/all"),
+      ]);
+
+      const rooms = roomsRes.data;
+      const bookings = bookingsRes.data;
+
+      const today = new Date();
+
+      const isSameDay = (date) => {
+        const d = new Date(date);
+
+        return (
+          d.getDate() === today.getDate() &&
+          d.getMonth() === today.getMonth() &&
+          d.getFullYear() === today.getFullYear()
+        );
+      };
+
+      // Occupied Rooms
+      const occupied = bookings.filter(
+        (booking) => booking.status === "CheckedIn"
+      ).length;
+
+      // Available Rooms
+      const available = rooms.length - occupied;
+
+      // Today's Check-ins
+      const todayCheckins = bookings.filter(
+        (booking) =>
+          booking.status === "CheckedIn" &&
+          isSameDay(booking.checkInDate)
+      );
+
+      // Revenue Today
+      let revenueToday = 0;
+
+      todayCheckins.forEach((booking) => {
+        if (!booking.room) return;
+
+        const checkIn = new Date(booking.checkInDate);
+        const checkOut = new Date(booking.checkOutDate);
+
+        let nights =
+          (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+
+        if (nights <= 0) nights = 1;
+
+        revenueToday += booking.room.roomPrice * nights;
+      });
+
+      setStats([
+        {
+          label: "Available Rooms",
+          value: available,
+        },
+        {
+          label: "Occupied",
+          value: occupied,
+        },
+        {
+          label: "Today's Check-ins",
+          value: todayCheckins.length,
+        },
+        {
+          label: "Revenue Today",
+          value: `$${revenueToday.toLocaleString()}`,
+        },
+      ]);
+    } catch (err) {
+      console.error(err);
     }
+  };
+
   return (
     <section className="rooms-admin">
-      <div className="rooms-admin__orb" />
-
       <div className="rooms-admin__inner">
+
         <div className="rooms-admin__eyebrow">
           <span className="rooms-admin__eyebrow-dot" />
           Hotel Administration
@@ -64,7 +129,6 @@ const AdminDashboard = () => {
           Hotel <em>Management</em> Dashboard
         </h1>
 
-        {/* Stats */}
         <div className="dashboard-stats">
           {stats.map((item) => (
             <div key={item.label} className="dashboard-stat">
@@ -74,7 +138,6 @@ const AdminDashboard = () => {
           ))}
         </div>
 
-        {/* Modules */}
         <div className="dashboard-grid">
           {modules.map((module) => {
             const Icon = module.icon;
@@ -89,13 +152,17 @@ const AdminDashboard = () => {
 
                 <p>{module.description}</p>
 
-                <button className="dashboard-card__button" onClick={() => moveTo(module.link)}>
+                <button
+                  className="dashboard-card__button"
+                  onClick={() => navigate(module.link)}
+                >
                   Open Module
                 </button>
               </div>
             );
           })}
         </div>
+
       </div>
     </section>
   );

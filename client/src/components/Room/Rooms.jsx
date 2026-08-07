@@ -185,7 +185,7 @@ export default function Rooms() {
 
                   <div className="room-view-card__footer">
                     <div className="room-view-card__price">
-                      ${room.roomPrice}
+                      Rs. {room.roomPrice}
                       <span>/ night</span>
                     </div>
                     <button
